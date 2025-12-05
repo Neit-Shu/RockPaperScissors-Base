@@ -4,6 +4,8 @@ using TMPro;
 public enum Figure { ROCK, SCISSORS, PAPER, NONE}
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private Animator _playerOneSelectedImageAnimator;
+    [SerializeField] private Animator _playerTwoSelectedImageAnimator;
     [SerializeField] private Animator _playerOneChoiceAnimator;
     [SerializeField] private Animator _playerTwoChoiceAnimator;
     [SerializeField] private GameObject _endRoundPanel;
@@ -32,6 +34,10 @@ public class GameManager : MonoBehaviour
 
         _playerOneChoiceAnimator.Play("PlayerOneChoiceMoveForward");
         _playerTwoChoiceAnimator.Play("PlayerTwoChoiceMoveForward");
+
+        _playerOneSelectedImageAnimator.Play("PlayerOneSelectedImageMoveBackward");
+        _playerTwoSelectedImageAnimator.Play("PlayerTwoSelectedImageMoveBackward");
+
     }
     public void Choice(Figure choice, bool isPlayerOne)
     {
@@ -76,5 +82,8 @@ public class GameManager : MonoBehaviour
 
         _playerOneChoiceAnimator.Play("PlayerOneChoiceMoveBackward");
         _playerTwoChoiceAnimator.Play("PlayerTwoChoiceMoveBackward");
+
+        _playerOneSelectedImageAnimator.Play("PlayerOneSelectedImageMoveForward");
+        _playerTwoSelectedImageAnimator.Play("PlayerTwoSelectedImageMoveForward");
     }
 }
