@@ -1,9 +1,14 @@
 using UnityEngine;
 using TMPro;
-
-public enum Figure { ROCK, SCISSORS, PAPER, NONE}
+using UnityEngine.UI;
+public enum Figure { ROCK, SCISSORS, PAPER, NONE }
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private Sprite _rockImage;
+    [SerializeField] private Sprite _paperImage;
+    [SerializeField] private Sprite _scissorsImage;
+    [SerializeField] private Image _playerOneSelectedImage;
+    [SerializeField] private Image _playerTwoSelectedImage;
     [SerializeField] private Animator _playerOneSelectedImageAnimator;
     [SerializeField] private Animator _playerTwoSelectedImageAnimator;
     [SerializeField] private Animator _playerOneChoiceAnimator;
@@ -41,33 +46,35 @@ public class GameManager : MonoBehaviour
     }
     public void Choice(Figure choice, bool isPlayerOne)
     {
-        if(_isRoundFinished)
+        if (_isRoundFinished)
         {
             return;
         }
-        if(isPlayerOne)
+        if (isPlayerOne)
         {
             _playerOneChoice = choice;
             _isPlayerOneSelected = true;
+            SetSelectedImage(choice, _playerOneSelectedImage);
         }
         else
         {
             _playerTwoChoice = choice;
             _isPlayerTwoSelected = true;
+            SetSelectedImage(choice, _playerTwoSelectedImage);
         }
-        if(_isPlayerOneSelected && _isPlayerTwoSelected)
+        if (_isPlayerOneSelected && _isPlayerTwoSelected)
         {
             _isRoundFinished = true;
             DetermineWinner();
         }
-    }    
+    }
     private void DetermineWinner()
     {
-        if(_playerOneChoice == _playerTwoChoice)
+        if (_playerOneChoice == _playerTwoChoice)
         {
             _endRoundMessageText.SetText("Ничья!");
         }
-        else if(_playerOneChoice == Figure.ROCK && _playerTwoChoice == Figure.SCISSORS
+        else if (_playerOneChoice == Figure.ROCK && _playerTwoChoice == Figure.SCISSORS
             || _playerOneChoice == Figure.SCISSORS && _playerTwoChoice == Figure.PAPER
             || _playerOneChoice == Figure.PAPER && _playerTwoChoice == Figure.ROCK)
         {
@@ -85,5 +92,15 @@ public class GameManager : MonoBehaviour
 
         _playerOneSelectedImageAnimator.Play("PlayerOneSelectedImageMoveForward");
         _playerTwoSelectedImageAnimator.Play("PlayerTwoSelectedImageMoveForward");
+    }
+
+    private void SetSelectedImage(Figure figure, Image image)
+    {
+        switch (figure)
+        {
+            case Figure.ROCK: image.sprite = _rockImage; break;
+            case Figure.SCISSORS: image.sprite = _scissorsImage; break;
+            case Figure.PAPER: image.sprite = _paperImage; break;
+        }
     }
 }
