@@ -1,2 +1,24 @@
 fileFormatVersion: 2
 guid: cb3bd1457846b3e49a298139ab1e4f4e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _playerOneScoreText: {instanceID: 0}
+  - _playerTwoScoreText: {instanceID: 0}
+  - _rockImage: {instanceID: 0}
+  - _paperImage: {instanceID: 0}
+  - _scissorsImage: {instanceID: 0}
+  - _playerOneSelectedImage: {instanceID: 0}
+  - _playerTwoSelectedImage: {instanceID: 0}
+  - _playerOneSelectedImageAnimator: {instanceID: 0}
+  - _playerTwoSelectedImageAnimator: {instanceID: 0}
+  - _playerOneChoiceAnimator: {instanceID: 0}
+  - _playerTwoChoiceAnimator: {instanceID: 0}
+  - _endRoundPanel: {instanceID: 0}
+  - _endRoundMessageText: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public enum Figure { ROCK, SCISSORS, PAPER, NONE }
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI _playerOneScoreText;
+    [SerializeField] private TextMeshProUGUI _playerTwoScoreText;
     [SerializeField] private Sprite _rockImage;
     [SerializeField] private Sprite _paperImage;
     [SerializeField] private Sprite _scissorsImage;
@@ -15,12 +17,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Animator _playerTwoChoiceAnimator;
     [SerializeField] private GameObject _endRoundPanel;
     [SerializeField] private TextMeshProUGUI _endRoundMessageText;
+
+    private int _playerOneCurrentScore = 0;
+    private int _playerTwoCurrenrScore = 0;
     private Figure _playerOneChoice = Figure.NONE;
     private bool _isPlayerOneSelected = false;
     private Figure _playerTwoChoice = Figure.NONE;
     private bool _isPlayerTwoSelected = false;
     private bool _isRoundFinished = false;
 
+
+    private void Awake()
+    {
+        SetScoreText(_playerOneScoreText, _playerOneCurrentScore, _playerTwoCurrenrScore);
+        SetScoreText(_playerTwoScoreText, _playerTwoCurrenrScore, _playerOneCurrentScore);
+    }
     private void Start()
     {
         StartGame();
@@ -79,10 +90,12 @@ public class GameManager : MonoBehaviour
             || _playerOneChoice == Figure.PAPER && _playerTwoChoice == Figure.ROCK)
         {
             _endRoundMessageText.SetText("Игрок 1 победил!");
+            _playerOneCurrentScore++;
         }
         else
         {
             _endRoundMessageText.SetText("Игрок 2 победил!");
+            _playerTwoCurrenrScore++;
         }
 
         _endRoundPanel.SetActive(true);
@@ -92,6 +105,10 @@ public class GameManager : MonoBehaviour
 
         _playerOneSelectedImageAnimator.Play("PlayerOneSelectedImageMoveForward");
         _playerTwoSelectedImageAnimator.Play("PlayerTwoSelectedImageMoveForward");
+
+        SetScoreText(_playerOneScoreText, _playerOneCurrentScore, _playerTwoCurrenrScore);
+        SetScoreText(_playerTwoScoreText, _playerTwoCurrenrScore, _playerOneCurrentScore);
+
     }
 
     private void SetSelectedImage(Figure figure, Image image)
@@ -102,5 +119,9 @@ public class GameManager : MonoBehaviour
             case Figure.SCISSORS: image.sprite = _scissorsImage; break;
             case Figure.PAPER: image.sprite = _paperImage; break;
         }
+    }
+    private void SetScoreText(TextMeshProUGUI text, int player1Score, int player2Score)
+    {
+        text.SetText($"{player1Score} / {player2Score}");
     }
 }
