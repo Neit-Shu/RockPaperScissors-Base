@@ -1,9 +1,11 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class GameManager : MonoBehaviour
 {
+    public static event Action<State> SendState;
     // Ссылки на UI элементы и компоненты
     [SerializeField] private GameObject _AIToggleButton;
     [SerializeField] private TextMeshProUGUI _playerOneScoreText;
@@ -13,10 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite _scissorsImage;
     [SerializeField] private Image _playerOneSelectedImage;
     [SerializeField] private Image _playerTwoSelectedImage;
-    [SerializeField] private Animator _playerOneSelectedImageAnimator;
-    [SerializeField] private Animator _playerTwoSelectedImageAnimator;
-    [SerializeField] private Animator _playerOneChoiceAnimator;
-    [SerializeField] private Animator _playerTwoChoiceAnimator;
+    
     [SerializeField] private GameObject _endRoundPanel;
     [SerializeField] private TextMeshProUGUI _endRoundMessageText;
 
@@ -65,11 +64,7 @@ public class GameManager : MonoBehaviour
 
         _isRoundFinished = false;
 
-        _playerOneChoiceAnimator.Play("PlayerOneChoiceMoveForward");
-        _playerTwoChoiceAnimator.Play("PlayerTwoChoiceMoveForward");
-
-        _playerOneSelectedImageAnimator.Play("PlayerOneSelectedImageMoveBackward");
-        _playerTwoSelectedImageAnimator.Play("PlayerTwoSelectedImageMoveBackward");
+        SendState?.Invoke(State.STARTROUND);
     }
 
     public void OnChoice(Figure choice, bool isPlayerOne)
@@ -84,7 +79,7 @@ public class GameManager : MonoBehaviour
 
             if (_isVersusAi)
             {                
-                _playerTwoChoice = (Figure)Random.Range(0, 3);
+                _playerTwoChoice = (Figure)UnityEngine.Random.Range(0, 3);
                 _isPlayerTwoSelected = true;
                 SetSelectedImage(_playerTwoChoice, _playerTwoSelectedImage);
             }
@@ -122,6 +117,7 @@ public class GameManager : MonoBehaviour
         if (_playerOneChoice == _playerTwoChoice)
         {
             _endRoundMessageText.SetText("Ничья!");
+            SendState?.Invoke(State.DRAW);
         }
         else if (_playerOneChoice == Figure.ROCK && _playerTwoChoice == Figure.SCISSORS
             || _playerOneChoice == Figure.SCISSORS && _playerTwoChoice == Figure.PAPER
@@ -129,21 +125,17 @@ public class GameManager : MonoBehaviour
         {
             _endRoundMessageText.SetText("Игрок 1 победил!");
             _playerOneCurrentScore++;
+            SendState?.Invoke(State.PLAYER1WIN);
         }
         else
         {
             _endRoundMessageText.SetText("Игрок 2 победил!");
             _playerTwoCurrentScore++;
+            SendState?.Invoke(State.PLAYER2WIN);
         }
 
         _endRoundPanel.SetActive(true);
-
-        _playerOneChoiceAnimator.Play("PlayerOneChoiceMoveBackward");
-        _playerTwoChoiceAnimator.Play("PlayerTwoChoiceMoveBackward");
-
-        _playerOneSelectedImageAnimator.Play("PlayerOneSelectedImageMoveForward");
-        _playerTwoSelectedImageAnimator.Play("PlayerTwoSelectedImageMoveForward");
-
+                
         SetScoreText(_playerOneScoreText, _playerOneCurrentScore, _playerTwoCurrentScore);
         SetScoreText(_playerTwoScoreText, _playerTwoCurrentScore, _playerOneCurrentScore);
     }
