@@ -1,2 +1,2 @@
-# Jajanken
+# RockPaperScissors
 RPS Arena 
