@@ -27,6 +27,7 @@ public class ButtonChoice : MonoBehaviour
 
     private void ChoiceSelected()
     {
+        Debug.Log($"Кнопка нажата: {_buttonChoice}, игрок 1: {_isPlayerOne}"); 
         SendChoice?.Invoke(this._buttonChoice, this._isPlayerOne); // Вызываем событие, передавая выбранную фигуру и флаг игрока (проверка на null)
     }
 }
