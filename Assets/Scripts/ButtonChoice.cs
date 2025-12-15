@@ -1,33 +1,44 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class ButtonChoice : MonoBehaviour
 {
-    public static event Action<Figure, bool> SendChoice; // Статическое событие для отправки выбора фигуры и флага игрока
-
-    [SerializeField] private Figure _buttonChoice; // Выбор фигуры, связанный с кнопкой (настраивается в Inspector)
-    [SerializeField] private bool _isPlayerOne; // Флаг: true если кнопка принадлежит первому игроку (настраивается в Inspector)
-
-    private Button _button; // Ссылка на компонент Button
-
-    void Awake()
+    public static event Action<Figure, bool> SendChoice;
+    [SerializeField] private Figure _buttonChoice;
+    [SerializeField] private bool _isPlayerOne;
+    private Button _button;
+    private GameManager _gameManagerScript;
+    private void Awake()
     {
-        _button = GetComponent<Button>(); // Получаем ссылку на компонент Button при инициализации объекта
+        _button = GetComponent<Button>();
+        _gameManagerScript = FindFirstObjectByType<GameManager>(FindObjectsInactive.Include);                                   
+
+        if (_gameManagerScript == null)
+        {
+            throw new Exception("GameManager component was missing on the " + gameObject.name);      
+        }
     }
+
+    
 
     private void OnEnable()
     {
-        _button.onClick.AddListener(ChoiceSelected); // Подписываемся на событие клика кнопки при активации объекта
+        _button.onClick.AddListener(ChoiceSelected);
     }
 
     private void OnDisable()
     {
-        _button.onClick.RemoveListener(ChoiceSelected); // Отписываемся от события при деактивации объекта (во избежание утечек памяти)
+        _button.onClick.RemoveListener(ChoiceSelected);
     }
 
     private void ChoiceSelected()
     {
-        Debug.Log($"Кнопка нажата: {_buttonChoice}, игрок 1: {_isPlayerOne}"); 
-        SendChoice?.Invoke(this._buttonChoice, this._isPlayerOne); // Вызываем событие, передавая выбранную фигуру и флаг игрока (проверка на null)
+        SendChoice?.Invoke(this._buttonChoice, this._isPlayerOne);
+        if (_gameManagerScript._isVersusAi)
+        {
+            Figure rFigure = (Figure)UnityEngine.Random.Range(0, 3);
+            SendChoice?.Invoke(rFigure, false);
+        }
     }
 }

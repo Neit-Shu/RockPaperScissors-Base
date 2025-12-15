@@ -902,10 +902,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c550c06d703fc468ae9e4685c72012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _playerOneSelectedImageAnimator: {fileID: 1777618728}
   _playerOneChoiceAnimator: {fileID: 166711493}
-  _playerTwoSelectedImageAnimator: {fileID: 1260165859}
+  _playerOneSelectedImageAnimator: {fileID: 1777618728}
   _playerTwoChoiceAnimator: {fileID: 631052888}
+  _playerTwoSelectedImageAnimator: {fileID: 1260165859}
 --- !u!4 &691896675
 Transform:
   m_ObjectHideFlags: 0
@@ -1085,13 +1085,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb3bd1457846b3e49a298139ab1e4f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  _AIToggleButton: {fileID: 1265648976}
+  _endRoundPanel: {fileID: 451579473}
   _rockImage: {fileID: 21300000, guid: f895c6a85de432c4fa7ef6c0c8e47324, type: 3}
-  _paperImage: {fileID: 21300000, guid: 472ff6cfec7a7bd4e8255f0ea37fc3cd, type: 3}
   _scissorsImage: {fileID: 21300000, guid: d77af686123b99e46b938ff3e296289d, type: 3}
+  _paperImage: {fileID: 21300000, guid: 472ff6cfec7a7bd4e8255f0ea37fc3cd, type: 3}
   _playerOneSelectedImage: {fileID: 1777618726}
   _playerTwoSelectedImage: {fileID: 1260165857}
-  _endRoundPanel: {fileID: 451579473}
+  _AIToggleButton: {fileID: 1265648976}
 --- !u!4 &944177890
 Transform:
   m_ObjectHideFlags: 0
@@ -1524,6 +1524,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1158643053}
   - component: {fileID: 1158643052}
+  - component: {fileID: 1158643054}
   m_Layer: 0
   m_Name: ButtonChoice
   m_TagString: Untagged
@@ -1560,6 +1561,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1158643054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158643051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1260165855
 GameObject:
   m_ObjectHideFlags: 0
@@ -1823,6 +1868,8 @@ MonoBehaviour:
   _playerOneScoreText: {fileID: 680221470}
   _playerTwoScoreText: {fileID: 1123197003}
   _endRoundMessageText: {fileID: 2095821945}
+  _gameContinueMessageText: "<color=green>\u041D\u0430\u0436\u043C\u0438\u0442\u0435
+    \u043D\u0430 \u044D\u043A\u0440\u0430\u043D \u0434\u043B\u044F \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0435\u043D\u0438\u044F.</color>"
 --- !u!4 &1425094338
 Transform:
   m_ObjectHideFlags: 0
