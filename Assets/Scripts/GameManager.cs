@@ -1,8 +1,5 @@
 using System;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,25 +12,22 @@ public class GameManager : MonoBehaviour
     private bool _isPlayerTwoSelected = false;
     private bool _isRoundFinished = false;
     public bool _isVersusAi { get; private set; } = true;
-    [SerializeField] private GameObject _AIToggleButton;
-    private TextMeshProUGUI _AIToggleButtonText;
+    
     private void OnEnable()
     {
         ButtonChoice.SendChoice += OnChoice;
+        UIButtonAi.SendAiButtonState += OnAiButtonState;
     }
 
     private void OnDisable()
     {
         ButtonChoice.SendChoice -= OnChoice;
-    }
-    private void Awake()
-    {
-        _AIToggleButtonText = _AIToggleButton.GetComponentInChildren<TextMeshProUGUI>();
+        UIButtonAi.SendAiButtonState -= OnAiButtonState;
+
     }
 
     private void Start()
-    {
-        SetAiButtonText(_isVersusAi);
+    {       
 
         StartGame();
     }
@@ -99,26 +93,10 @@ public class GameManager : MonoBehaviour
         }
 
         _endRoundPanel.SetActive(true);
+    }      
+    private void OnAiButtonState(bool state)
+    {
+        _isVersusAi = state;
     }
-
     
-
-    private void SetAiButtonText(bool state)
-    {
-        if (state)
-        {
-            _AIToggleButtonText.SetText("vs.\nœ ");
-        }
-        else
-        {
-            _AIToggleButtonText.SetText("vs.\n»„ÓÍ");
-        }
-    }
-
-    public void AiButtonToggle()
-    {
-        _isVersusAi = !_isVersusAi;
-
-        SetAiButtonText(_isVersusAi);
-    }
 }
