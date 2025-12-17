@@ -18,18 +18,32 @@ public class ButtonChoice : MonoBehaviour
         {
             throw new Exception("GameManager component was missing on the " + gameObject.name);      
         }
-    }
-
-    
+    }   
 
     private void OnEnable()
     {
         _button.onClick.AddListener(ChoiceSelected);
+        UIButtonAi.SendAiButtonState += OnAiButtonState;
     }
 
     private void OnDisable()
     {
         _button.onClick.RemoveListener(ChoiceSelected);
+        UIButtonAi.SendAiButtonState -= OnAiButtonState;
+    }
+    private void OnAiButtonState(bool state)
+    {
+        if (!_isPlayerOne)
+        {
+            if(state)
+            {
+                _button.transition = Selectable.Transition.None;
+            }
+            else
+            {
+                _button.transition = Selectable.Transition.ColorTint;
+            }
+        }
     }
 
     private void ChoiceSelected()
